@@ -1,0 +1,32 @@
+pipeline {
+    agent any
+
+    tools {
+        nodejs 'node'       // <- use "node", as Jenkins suggests
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main',
+                    url: 'https://github.com/sousaa-bzz/M324_traficlight.git'
+            }
+        }
+
+        stage('Install dependencies') {
+            steps {
+                dir('app') {
+                    sh 'npm install'
+                }
+            }
+        }
+
+        stage('Test') {
+            steps {
+                dir('app') {
+                    sh 'npm test'
+                }
+            }
+        }
+    }
+}
